@@ -58,6 +58,14 @@
 
     </androidx.core.widget.NestedScrollView>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"
+        android:src="@mipmap/ic_add_white_24dp"
+        android:onClick="onClickDone"/>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
