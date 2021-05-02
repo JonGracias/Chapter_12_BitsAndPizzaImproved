@@ -4,15 +4,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.ShareActionProvider;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuItemCompat;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+
+import com.google.android.material.tabs.TabLayout;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -26,11 +31,13 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-    SectionsPagerAdapter pagerAdapter =
-            new SectionsPagerAdapter(getSupportFragmentManager());
-    ViewPager pager = (ViewPager) findViewById(R.id.pager);
-    pager.setAdapter(pagerAdapter);
+        SectionsPagerAdapter pagerAdapter =
+                new SectionsPagerAdapter(getSupportFragmentManager());
+        ViewPager pager = (ViewPager) findViewById(R.id.pager);
+        pager.setAdapter(pagerAdapter);
 
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(pager);
     }
 
     @Override
@@ -40,27 +47,25 @@ public class MainActivity extends AppCompatActivity {
         MenuItem menuItem = menu.findItem(R.id.action_share);
         shareActionProvider =
                 (ShareActionProvider) MenuItemCompat.getActionProvider(menuItem);
-        setShareActionIntent("Want to join me for pizza?");
+        setShareActionIntent();
         return super.onCreateOptionsMenu(menu);
     }
 
-    private void setShareActionIntent(String text) {
+    private void setShareActionIntent() {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_TEXT, text);
+        intent.putExtra(Intent.EXTRA_TEXT, "Want to join me for pizza?");
         shareActionProvider.setShareIntent(intent);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_create_order:
-                Intent intent = new Intent(this, OrderActivity.class);
-                startActivity(intent);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.action_create_order) {
+            Intent intent = new Intent(this, OrderActivity.class);
+            startActivity(intent);
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     private class SectionsPagerAdapter extends FragmentPagerAdapter {
@@ -70,18 +75,19 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        public int getCount(){
+        public int getCount() {
             return 4;
         }
 
+        @NonNull
         @Override
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return  new TopFragment();
+                    return new TopFragment();
 
                 case 1:
-                    return  new PizzaFragment();
+                    return new PizzaFragment();
 
                 case 2:
                     return new PastaFragment();
@@ -92,5 +98,21 @@ public class MainActivity extends AppCompatActivity {
             }
             return null;
         }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0:
+                    return getResources().getText(R.string.home_tab);
+                case 1:
+                    return getResources().getText(R.string.pizza_tab);
+                case 2:
+                    return getResources().getText(R.string.pasta_tab);
+                case 3:
+                    return getResources().getText(R.string.store_tab);
+            }
+            return null;
+        }
     }
+
 }
