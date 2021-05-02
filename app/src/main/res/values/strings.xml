@@ -16,9 +16,17 @@
         <item>Cambridge</item>
         <item>Sebastopol</item>
     </string-array>
+
     <string name="home_tab">Home</string>
     <string name="pizza_tab">Pizzas</string>
     <string name="pasta_tab">Pastas</string>
     <string name="store_tab">Stores</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="company_name">Bits and Pizzas</string>
+    <string name="restuarant_image">Restaurant image</string>
+    <string name="home_text">Since we opened our doors in 2017, Buts and Pizzas has
+    built its reputation as one of America\'s best italian-Digital
+    restaurants. Some people believe eating out is about being with your
+    friends and family. We believe that good food is best enjoyed while staring at your phone.</string>
 </resources>
